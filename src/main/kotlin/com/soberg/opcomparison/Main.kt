@@ -1,18 +1,32 @@
 package com.soberg.opcomparison
 
+import com.soberg.opcomparison.OperationRunner.Result
 import kotlin.math.pow
 
 fun main(args: Array<String>) {
-    val sizes = intArrayOf(2, 4, 5, 6)
+    val sizes = intArrayOf(3, 5, 6, 7)
         .map { exp -> 10.0.pow(exp).toInt() }
     val opRunner = OperationRunner(sizes)
-    val results = opRunner.runOperation { values ->
+
+    singleMapTest(opRunner)
+}
+
+private fun singleMapTest(opRunner: OperationRunner) {
+    opRunner.runOperation { values ->
+        values.map { it * 10 }
+    }.printResults("Collection - single map")
+
+    opRunner.runOperation { values ->
         values.asSequence()
             .map { it * 10 }
-            .map { it + 10 }
-            .map { it - 2 }
+            .toList()
+    }.printResults("Sequence - single map")
+}
+
+private fun List<Result>.printResults(opName: String) {
+    println(opName)
+    forEach { result ->
+        println("${result.collectionSize} : ${result.opTimeMillis}")
     }
-    results.forEach {
-        println("${it.collectionSize} : ${it.opTimeMillis}")
-    }
+    println()
 }
