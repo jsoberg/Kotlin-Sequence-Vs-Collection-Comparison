@@ -5,19 +5,30 @@ class OperationTest(testSizes: List<Int>) {
     private val opRunner = OperationRunner(testSizes)
 
     fun run() {
-        singleMapTest(opRunner)
+        singleMapTest()
     }
 
-    private fun singleMapTest(opRunner: OperationRunner) {
-        opRunner.runOperation { values ->
-            values.map { it * 10 }
-        }.printResults(">> Collection - single map")
-
-        opRunner.runOperation { values ->
-            values.asSequence()
+    private fun singleMapTest() {
+        runTests(
+            collectionOp = { values ->
+                values.map { it * 10 }},
+            sequenceOp = { values ->
+                values.asSequence()
                 .map { it * 10 }
-                .toList()
-        }.printResults(">> Sequence - single map")
+                .toList() },
+            opName = "single map"
+        )
+    }
+
+    private fun runTests(
+        collectionOp: Operation,
+        sequenceOp: Operation,
+        opName: String
+    ) {
+        val collection = opRunner.runOperation(collectionOp)
+        val sequence = opRunner.runOperation(sequenceOp)
+        collection.printResults(">> Collection - $opName")
+        sequence.printResults(">> Sequence - $opName")
         println()
     }
 
