@@ -6,6 +6,10 @@ class OperationTest(testSizes: List<Int>) {
 
     fun run() {
         singleMapTest()
+        doubleMapTest()
+
+        singleFilterTest()
+        doubleFilterTest()
     }
 
     private fun singleMapTest() {
@@ -16,7 +20,47 @@ class OperationTest(testSizes: List<Int>) {
                 values.asSequence()
                 .map { it * 10 }
                 .toList() },
-            opName = "single map"
+            opName = "1 map"
+        )
+    }
+
+    private fun doubleMapTest() {
+        runTests(
+            collectionOp = { values ->
+                values.map { it * 10 }
+                    .map { it / 2 }},
+            sequenceOp = { values ->
+                values.asSequence()
+                    .map { it * 10 }
+                    .map { it / 2 }
+                    .toList() },
+            opName = "2 maps"
+        )
+    }
+
+    private fun singleFilterTest() {
+        runTests(
+            collectionOp = { values ->
+                values.filter { it % 2 == 0 }},
+            sequenceOp = { values ->
+                values.asSequence()
+                    .filter { it % 2 == 0 }
+                    .toList() },
+            opName = "1 filter"
+        )
+    }
+
+    private fun doubleFilterTest() {
+        runTests(
+            collectionOp = { values ->
+                values.filter { it % 2 == 0 }
+                    .filter { it % 6 == 0 }},
+            sequenceOp = { values ->
+                values.asSequence()
+                    .filter { it % 2 == 0 }
+                    .filter { it % 6 == 0 }
+                    .toList() },
+            opName = "2 filters"
         )
     }
 
@@ -38,4 +82,5 @@ class OperationTest(testSizes: List<Int>) {
             println("${result.collectionSize} : ${result.opTimeMillis}")
         }
     }
+
 }
