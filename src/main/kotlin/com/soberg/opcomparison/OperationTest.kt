@@ -15,6 +15,7 @@ class OperationTest(testSizes: List<Int>) {
         doubleFilterDoubleMapTest()
     }
 
+    //region Map
     private fun singleMapTest() {
         runTests(
             collectionOp = { values ->
@@ -40,7 +41,9 @@ class OperationTest(testSizes: List<Int>) {
             opName = "2 maps"
         )
     }
+    //endregion
 
+    //region Filter
     private fun singleFilterTest() {
         runTests(
             collectionOp = { values ->
@@ -66,7 +69,9 @@ class OperationTest(testSizes: List<Int>) {
             opName = "2 filters"
         )
     }
+    //endregion
 
+    //region Combined Filter/Map
     private fun singleFilterSingleMapTest() {
         runTests(
             collectionOp = { values ->
@@ -98,6 +103,7 @@ class OperationTest(testSizes: List<Int>) {
             opName = "2 filters, 2 maps"
         )
     }
+    //endregion
 
     private fun runTests(
         collectionOp: Operation,
