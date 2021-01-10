@@ -10,6 +10,9 @@ class OperationTest(testSizes: List<Int>) {
 
         singleFilterTest()
         doubleFilterTest()
+
+        singleFilterSingleMapTest()
+        doubleFilterDoubleMapTest()
     }
 
     private fun singleMapTest() {
@@ -64,6 +67,38 @@ class OperationTest(testSizes: List<Int>) {
         )
     }
 
+    private fun singleFilterSingleMapTest() {
+        runTests(
+            collectionOp = { values ->
+                values.filter { it % 2 == 0 }
+                    .map { it / 2 }},
+            sequenceOp = { values ->
+                values.asSequence()
+                    .filter { it % 2 == 0 }
+                    .map { it / 2 }
+                    .toList() },
+            opName = "1 filter, 1 map"
+        )
+    }
+
+    private fun doubleFilterDoubleMapTest() {
+        runTests(
+            collectionOp = { values ->
+                values.filter { it % 2 == 0 }
+                    .filter { it % 6 == 0 }
+                    .map { it / 2 }
+                    .map { it * 3 }},
+            sequenceOp = { values ->
+                values.asSequence()
+                    .filter { it % 2 == 0 }
+                    .filter { it % 6 == 0 }
+                    .map { it / 2 }
+                    .map { it * 3 }
+                    .toList() },
+            opName = "2 filters, 2 maps"
+        )
+    }
+
     private fun runTests(
         collectionOp: Operation,
         sequenceOp: Operation,
@@ -79,7 +114,7 @@ class OperationTest(testSizes: List<Int>) {
     private fun List<OperationRunner.Result>.printResults(opName: String) {
         println(opName)
         forEach { result ->
-            println("${result.collectionSize} : ${result.opTimeMillis}")
+            println("${result.collectionSize} : ${result.opTimeMillis}ms")
         }
     }
 
