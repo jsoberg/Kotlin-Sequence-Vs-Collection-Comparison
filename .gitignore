@@ -67,5 +67,10 @@ fabric.properties
 # Editor-based Rest Client
 .idea/httpRequests
 
-# Android studio 3.1+ serialized cache file
+# Android studio
 .idea/caches/build_file_checksums.ser
+.idea/caches
+local.properties
+
+# Kotlin 2.0+
+.kotlin

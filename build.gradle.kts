@@ -1,11 +1,11 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.3.72"
+    kotlin("jvm") version "2.1.0"
 }
 
 group = "com.soberg.kotlin.opcomparison"
-version = "0.1"
+version = "0.2"
 
 repositories {
     mavenCentral()
@@ -13,8 +13,4 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
-}
-
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
 }
